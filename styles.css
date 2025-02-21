@@ -1,20 +1,45 @@
+* {
+    font-family: Roboto;
+}
+
+body {  
+    background-color: black;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.button-container {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
 #etch-container {
-    /* border: 1px solid red; */
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .square-div {
     border: 1px solid rgba(150, 150, 150, 0.192);
-    height: 50px;
-    width: 50px;
+    background-color: white;
+    height: 10px;
+    width: 10px;
 }
 
 /* This needs to be made using javascript to manipulate the line break */
-.square-div:nth-child(16n + 1){
+.square-div:nth-child(100n + 1){
     width: 100%;
     border: 0;
     height: 0;
+}
+
+.square-div-special {
+    width: 100%;
+    border: 0;
+    height: 0;    
 }
 
 .colored-in {
