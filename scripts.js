@@ -2,16 +2,36 @@ const etchContainer = document.querySelector('#etch-container');
 const createGridButton = document.querySelector('.create-grid-button');
 const clearGridButton = document.querySelector('.clear-grid-button');
 
+// Stops the forbidden cursor behavior when dragging
+document.addEventListener("dragover", (event) => {
+    event.preventDefault();
+});
+
 // By default, open a 100x100 grid
 generateGrid(100);
 
 function promptUserForInput() {
     gridCount = prompt('Enter desired grid size:');
-    generateGrid(gridCount);
+    console.log(gridCount);
+
+    if (gridCount <= 0 || gridCount > 100 || String(gridCount).length <= 0 || isNaN(gridCount)) {
+        alert('Invalid: Must be an integer greater than zero and less than 100')
+        promptUserForInput();
+        return;
+    } else {
+        generateGrid(gridCount);
+    }
 }
 
 function deleteCurrentGrid() {
     etchContainer.innerHTML = '';
+}
+
+function clearAllGridSquares() {
+    const allBoxes = document.querySelectorAll('.square-div');
+    allBoxes.forEach(box => {
+        box.classList.remove('colored-in');
+    })
 }
 
 // All button click event listeners
@@ -20,17 +40,13 @@ buttons.forEach(button => {
     button.addEventListener('click', () => {
         switch (button.id) {
             case 'delete-button':
-                etchContainer.innerHTML = '';
+                deleteCurrentGrid();
                 break;
             case 'clear-button':
-                const allBoxes = document.querySelectorAll('.square-div');
-                allBoxes.forEach(box => {
-                    box.classList.remove('colored-in');
-                })
+                clearAllGridSquares();
                 break;
             case 'create-button':
-                gridCount = prompt('Enter desired grid size:');
-                generateGrid(gridCount);
+                promptUserForInput();
                 break;
             default:
                 break;
@@ -41,10 +57,6 @@ buttons.forEach(button => {
 // Generate a grid based on the user's input number.
 // EXAMPLE: An input of 50 produces a 50x50 grid
 function generateGrid(gridSideLength) {
-    if (gridSideLength > 100){
-        alert('Maximum Allowable Size 100')
-        return;
-    }
 
     deleteCurrentGrid();
 
@@ -64,15 +76,17 @@ function generateGrid(gridSideLength) {
             const squareDiv = document.createElement('div');
             squareDiv.classList.add('square-div');
 
-            squareDiv.addEventListener('mouseover', (event) => {
-                // Stops crash if both keys are held down
-                if(event.ctrlKey === true && event.altKey === true){
+            squareDiv.addEventListener('mousedown', (event) => {
+                if (event.buttons === 1) {
+                    squareDiv.classList.add('colored-in');
+                } else {
                     return;
                 }
-                if (event.ctrlKey === true) {
+            })
+            squareDiv.addEventListener('mouseover', (event) => {
+                if (event.buttons === 1) {
                     squareDiv.classList.add('colored-in');
-                }
-                if (event.altKey === true) {
+                } else if (event.buttons === 2) {
                     squareDiv.classList.remove('colored-in');
                 }
             })
