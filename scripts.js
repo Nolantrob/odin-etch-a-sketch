@@ -76,6 +76,10 @@ function generateGrid(gridSideLength) {
             const squareDiv = document.createElement('div');
             squareDiv.classList.add('square-div');
 
+            squareDiv.addEventListener('contextmenu', (event) => {
+                event.preventDefault();
+              });
+
             squareDiv.addEventListener('mousedown', (event) => {
                 if (event.buttons === 1) {
                     squareDiv.classList.add('colored-in');
