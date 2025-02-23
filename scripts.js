@@ -3,9 +3,9 @@ const createGridButton = document.querySelector('.create-grid-button');
 const clearGridButton = document.querySelector('.clear-grid-button');
 
 // Stops the forbidden cursor behavior when dragging
-document.addEventListener("dragover", (event) => {
+document.addEventListener('dragstart', (event) => {
     event.preventDefault();
-});
+})
 
 // By default, open a 100x100 grid
 generateGrid(100);
