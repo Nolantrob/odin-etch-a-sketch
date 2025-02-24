@@ -12,7 +12,6 @@ generateGrid(100);
 
 function promptUserForInput() {
     gridCount = prompt('Enter desired grid size:');
-    console.log(gridCount);
 
     if (gridCount <= 0 || gridCount > 100 || String(gridCount).length <= 0 || isNaN(gridCount)) {
         alert('Invalid: Must be an integer greater than zero and less than 100')
@@ -60,21 +59,12 @@ function generateGrid(gridSideLength) {
 
     deleteCurrentGrid();
 
-    // let gridLineBreakHandler = document.createElement('style');
-    let gridLineBreakHandler = document.querySelector('.grid-line-break-handler');
-
-    gridLineBreakHandler.textContent = `
-        .square-div:nth-child(${gridSideLength}n + 1) {
-            width: 100%;
-            border: 0;
-            height: 0;
-        }`
-
     for (let columns = 0; columns < gridSideLength; columns++) {
 
         for (let rows = 0; rows < gridSideLength; rows++) {
             const squareDiv = document.createElement('div');
             squareDiv.classList.add('square-div');
+            squareDiv.style.opacity = 1;
 
             squareDiv.addEventListener('contextmenu', (event) => {
                 event.preventDefault();
@@ -89,16 +79,35 @@ function generateGrid(gridSideLength) {
             })
             squareDiv.addEventListener('mouseover', (event) => {
                 if (event.buttons === 1) {
-                    squareDiv.classList.add('colored-in');
+
+                    if (squareDiv.style.opacity <= 0){
+                        squareDiv.style.opacity = 0;
+                        return;
+                    } else {
+                        squareDiv.style.opacity -= 0.2;
+                    }
+            
+
                 } else if (event.buttons === 2) {
-                    squareDiv.classList.remove('colored-in');
+                    // squareDiv.classList.remove('colored-in');
+                    if (squareDiv.style.opacity <= 1){
+                        return;
+                    } else {
+                        squareDiv.style.opacity += 0.2;
+                        console.log(squareDiv.style.opacity);
+                    }
+
                 }
             })
 
             etchContainer.appendChild(squareDiv);
+
         }
 
     }
 
+    // Magic number helping guide line breaks \o/
+    etchContainer.style.width = `${8 * gridSideLength}px`;
 
 }
+

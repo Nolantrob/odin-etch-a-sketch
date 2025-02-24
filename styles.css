@@ -17,13 +17,16 @@ body {
 }
 
 #etch-container {
+    /* border: 5px solid rgb(77, 0, 0); */
+    padding: 25px 25px 50px;
+    /* background-color: rgb(99, 0, 0); */
+    border-radius: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 button {
-    background-color: rgb(20, 20, 20);
+    background-color: rgb(0, 0, 0);
     color: white;
     border: 1px solid white;
     padding: 10px;
@@ -39,12 +42,18 @@ button:active {
 
 .square-div {
     border: 1px solid rgba(150, 150, 150, 0.103);
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     height: 6px;
     width: 6px;
+    opacity: 1;
 }
 
 .colored-in {
     background-color: black;
+}
+
+.etch-container-container {
+    display: flex;
+    justify-content: center;
 }
 
