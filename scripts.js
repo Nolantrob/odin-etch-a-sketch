@@ -7,6 +7,8 @@ document.addEventListener('dragstart', (event) => {
     event.preventDefault();
 })
 
+let colorModeSelector = 0;
+
 // By default, open a 100x100 grid
 generateGrid(100);
 
@@ -27,10 +29,18 @@ function deleteCurrentGrid() {
 }
 
 function clearAllGridSquares() {
-    const allBoxes = document.querySelectorAll('.square-div');
-    allBoxes.forEach(box => {
-        box.classList.remove('colored-in');
+    const allSquares = document.querySelectorAll('.square-div');
+    allSquares.forEach(square => {
+        // box.classList.remove('colored-in');
+        square.style.opacity = 1.0;
+        square.style.backgroundColor = `white`;
     })
+}
+
+function getRandomColor() {
+    // RGB format, pick a random color: rgb(0, 0, 0);
+    return `rgb(${Math.floor((Math.random()) * 255) + 1},${Math.floor((Math.random()) * 255) + 1},${Math.floor((Math.random()) * 255) + 1})`
+
 }
 
 // All button click event listeners
@@ -68,35 +78,39 @@ function generateGrid(gridSideLength) {
 
             squareDiv.addEventListener('contextmenu', (event) => {
                 event.preventDefault();
-              });
+            });
 
             squareDiv.addEventListener('mousedown', (event) => {
                 if (event.buttons === 1) {
-                    squareDiv.classList.add('colored-in');
+
+                    //  squareDiv.classList.add('colored-in');
+
+                    if (squareDiv.style.opacity <= 0) {
+                        squareDiv.style.opacity = 0;
+                        return;
+                    } else {
+                        squareDiv.style.opacity -= 0.5;
+                    }
                 } else {
                     return;
+
+                    // squareDiv.style.backgroundColor = `${getRandomColor()}`;
+
                 }
             })
             squareDiv.addEventListener('mouseover', (event) => {
                 if (event.buttons === 1) {
 
-                    if (squareDiv.style.opacity <= 0){
+                    //  squareDiv.classList.add('colored-in');
+
+                    if (squareDiv.style.opacity <= 0) {
                         squareDiv.style.opacity = 0;
                         return;
                     } else {
-                        squareDiv.style.opacity -= 0.2;
-                    }
-            
-
-                } else if (event.buttons === 2) {
-                    // squareDiv.classList.remove('colored-in');
-                    if (squareDiv.style.opacity <= 1){
-                        return;
-                    } else {
-                        squareDiv.style.opacity += 0.2;
-                        console.log(squareDiv.style.opacity);
+                        squareDiv.style.opacity -= 0.3;
                     }
 
+                    // squareDiv.style.backgroundColor = `${getRandomColor()}`;
                 }
             })
 
